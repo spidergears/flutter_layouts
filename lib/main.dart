@@ -28,11 +28,7 @@ class MyApp extends StatelessWidget {
               ],
             )
           ),
-          Icon(
-              Icons.star,
-              color: Colors.red[500]
-          ),
-          Text('41')
+          FavoriteWidget()
         ],
       )
     );
@@ -58,7 +54,7 @@ class MyApp extends StatelessWidget {
           )
         ],
       );
-    };
+    }
 
     Widget buttonSection = Container(
       child: Row(
@@ -106,4 +102,47 @@ Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situate
   }
 }
 
+class FavoriteWidget extends StatefulWidget {
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
 
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = false;
+  int _favoriteCount = 41;
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _isFavorited = false;
+        _favoriteCount -= 1;
+      }
+      else {
+        _isFavorited = true;
+        _favoriteCount += 1;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(0.0),
+          child: IconButton(
+              icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+              color: Colors.red[500],
+              onPressed: _toggleFavorite),
+        ),
+        SizedBox(
+          width: 18.0,
+          child: Container(
+            child: Text('$_favoriteCount'),
+          ),
+        )
+      ],
+    );
+  }
+}
